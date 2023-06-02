@@ -1,48 +1,42 @@
+#ifndef GRAPH_HPP
+#define GRAPH_HPP
+
 #include <iostream>
 #include <vector>
 #include <unordered_map>
 #include <unordered_set>
 #include <stack>
+#include <map>
+#include <queue>
 
 using namespace std;
 
+struct Edge {
+    string source;
+    string destination;
+    int capacity;
+    int flow;
+};
 class Graph{
     private:
-        unordered_map<string, vector<string>> graph;
+        unordered_map<string, vector<string>> grafo_guloso;
+        unordered_map<string, vector<Edge>> grafo_exato;
         unordered_set<string> visitedNodes;
-        int cont = 0;
+        int cont;
 
     public:
         int get_count(){
             return cont;
         }
 
+        Graph();
         // Função para adicionar uma aresta em um mapa de adjacência
-        void addEdge(const string& node, const string& edge) {
-            graph[node].push_back(edge);
-        }
+        void addEdge_guloso(const string& node, const string& edge);
         // Função para executar a DFS no grafo
-        void dfs(const string& startNode) {
-            stack<string> nodeStack;
-
-            nodeStack.push(startNode);
-
-            while (!nodeStack.empty()) {
-                string currentNode = nodeStack.top();
-                nodeStack.pop();
-
-                // Check if the current node exists in the graph
-                if (graph.count(currentNode) > 0) {
-                    const vector<string>& neighbors = graph.at(currentNode);
-                    for (const string& neighbor : neighbors) {
-                        if (visitedNodes.find(neighbor) == visitedNodes.end()) {
-                            nodeStack.push(neighbor);
-                            visitedNodes.insert(neighbor);
-                            cont++;
-                            break;
-                        }
-                    }
-                }
-            }
-        }
+        void Guloso(const string& startNode);
+        int Exato(const string& source, const string& sink);
+        void addEdge_exato(const string& source, const string& destination);
+        bool bfs(const unordered_map<string, vector<Edge>>& grafo_residual, const string& source, const string& destination, unordered_map<string, string>& parent);
 };
+
+#endif
