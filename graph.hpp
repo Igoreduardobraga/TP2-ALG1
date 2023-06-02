@@ -6,15 +6,15 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <stack>
-#include <map>
 #include <queue>
 #include <chrono>
+#define INF 0x3f3f3f3f
 
 using namespace std;
 
 struct Edge {
-    string source;
-    string destination;
+    int source;
+    int destination;
     int capacity;
     int flow;
 };
@@ -22,9 +22,9 @@ struct Edge {
 class Graph{
     private:
         unordered_map<string, vector<string>> grafo_guloso;
-        unordered_map<string, vector<Edge>> grafo_exato;
         unordered_set<string> visitedNodes;
-        unordered_map<string, unordered_set<string>> destinos_exato;
+        unordered_map<string, int> tabela;
+        vector<vector<Edge>> adj_list;
         int cont;
 
     public:
@@ -37,11 +37,10 @@ class Graph{
         void addEdge_guloso(const string& node, const string& edge);
         // Função para executar a DFS no grafo
         void Guloso(const string& startNode);
-        int Exato(const string& source, const string& sink);
-        void addEdge_exato(const string& source, const string& destination);
-        bool bfs(const unordered_map<string, vector<Edge>>& grafo_residual, const string& source, const string& destination, unordered_map<string, string>& parent);
-        bool edgeExists_exato(const string& source, const string& destination);
-        void DFS(const string& startNode, unordered_set<string>& visitedNodes, int& cont);
+        void addVertex(const string& vertex);
+        void addEdge(const string& source, const string& destination);
+        bool bfs(int source, int sink, vector<int>& parent);
+        int fordFulkerson();
 };
 
 #endif

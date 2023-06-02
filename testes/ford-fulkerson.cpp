@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include <map>
+#include <unordered_map>
 #include <unordered_set>
 #include <queue>
 #include <climits>
@@ -102,7 +102,8 @@ int fordFulkerson(map<string, vector<Edge>>& graph, const string& source, const 
 }
 
 int main() {
-    map<string, vector<Edge>> graph;
+    unordered_map<string, int> grafo;
+    vector<vector<int>> adj_list;
 
     addEdge(graph, "Andre", "CFO", 1);
     addEdge(graph, "Bruno", "RED", 1);

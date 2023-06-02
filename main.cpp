@@ -17,46 +17,43 @@ int main(int argc, char const *argv[]) {
     int num_usuarios, num_ofertas_emprego, num_qualificações;
     string usuario, vaga;
     vector<string> usuarios;
-    // vector<string> vagas;
     Graph grafo;
 
     cin >> num_usuarios >> num_ofertas_emprego >> num_qualificações; 
 
     string source = "source";
     string sink = "sink";
+    grafo.addVertex(source);
+    grafo.addVertex(sink);
     for(int i=0 ; i<num_qualificações ; i++){
         cin >> usuario >> vaga;
         usuarios.push_back(usuario);
-        //vagas.push_back(vaga);
         grafo.addEdge_guloso(usuario,vaga);
-        grafo.addEdge_exato(usuario,vaga);
-        grafo.addEdge_exato(source,usuario);
-        grafo.addEdge_exato(vaga,sink);
+        grafo.addVertex(usuario);
+        grafo.addVertex(vaga);
+        grafo.addEdge(usuario,vaga);
+        grafo.addEdge(vaga, sink);
+        grafo.addEdge(source, usuario);
     }
 
-    //retirar_elementos_repetidos(usuarios);
-    //retirar_elementos_repetidos(vagas);
+    retirar_elementos_repetidos(usuarios);
 
-    // for(int i=0 ; i<num_usuarios ; i++){
-    //     grafo.Guloso(usuarios[i]);
-    //     // grafo.addEdge_exato(source, usuarios[i]);
-    // }
-
-    // for(int i=0 ; i<num_ofertas_emprego ; i++){
-    //     grafo.addEdge_exato(vagas[i], sink);
-    // }
+    for(int i=0 ; i<num_usuarios ; i++){
+        grafo.Guloso(usuarios[i]);
+        //grafo.addEdge(source, usuarios[i]);
+    }
 
    
-    cout << grafo.Exato(source, sink) << endl;
+    cout << grafo.fordFulkerson() << endl;
 
-    //cout << "Guloso: " << grafo.get_count() << endl;
+    cout << "Guloso: " << grafo.get_count() << endl;
 
     auto end = std::chrono::high_resolution_clock::now(); // Obter o horário de término
 
     // Calcular a duração em segundos
     std::chrono::duration<double> duration = end - start;
     double seconds = duration.count();
-    //cout << "Tempo de execução: " << seconds << " segundos" << endl;
+    cout << "Tempo de execução: " << seconds << " segundos" << endl;
 
     return 0;
 }
