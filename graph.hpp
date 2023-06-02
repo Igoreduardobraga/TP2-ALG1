@@ -8,6 +8,7 @@
 #include <stack>
 #include <map>
 #include <queue>
+#include <chrono>
 
 using namespace std;
 
@@ -17,11 +18,13 @@ struct Edge {
     int capacity;
     int flow;
 };
+
 class Graph{
     private:
         unordered_map<string, vector<string>> grafo_guloso;
         unordered_map<string, vector<Edge>> grafo_exato;
         unordered_set<string> visitedNodes;
+        unordered_map<string, unordered_set<string>> destinos_exato;
         int cont;
 
     public:
@@ -37,6 +40,8 @@ class Graph{
         int Exato(const string& source, const string& sink);
         void addEdge_exato(const string& source, const string& destination);
         bool bfs(const unordered_map<string, vector<Edge>>& grafo_residual, const string& source, const string& destination, unordered_map<string, string>& parent);
+        bool edgeExists_exato(const string& source, const string& destination);
+        void DFS(const string& startNode, unordered_set<string>& visitedNodes, int& cont);
 };
 
 #endif
